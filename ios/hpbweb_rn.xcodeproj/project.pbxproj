@@ -209,7 +209,6 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				6D09EB2E0A411A96F5BFF2F3 /* [CP] Embed Pods Frameworks */,
 				38416438C4ECB1E0A15E3303 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -232,7 +231,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				5AF5CBEEB03037CAC4787EFD /* [CP] Embed Pods Frameworks */,
 				50190C6809B46AF4922FE6E3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -449,42 +447,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-hpbweb_rn/Pods-hpbweb_rn-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5AF5CBEEB03037CAC4787EFD /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-hpbweb_rn/Pods-hpbweb_rn-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-hpbweb_rn/Pods-hpbweb_rn-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6D09EB2E0A411A96F5BFF2F3 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-hpbweb_rn-hpbweb_rnTests/Pods-hpbweb_rn-hpbweb_rnTests-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-hpbweb_rn-hpbweb_rnTests/Pods-hpbweb_rn-hpbweb_rnTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BB61B2941B89A1F72693607F /* [CP] Check Pods Manifest.lock */ = {
