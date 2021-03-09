@@ -1,8 +1,10 @@
-import React from 'react';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Text } from 'react-native';
 import { SearchStackParamList } from '../navigation/search-stack';
+
+import React from 'react';
+
+import { StackNavigationProp } from '@react-navigation/stack';
 
 export type SearchScreenNavigationProp = StackNavigationProp<
   SearchStackParamList,
