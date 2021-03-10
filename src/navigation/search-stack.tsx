@@ -1,8 +1,8 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React from 'react';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+import React from 'react';
 import { SearchScreen } from '../screens/SearchScreen';
 import { MainTabParamsList } from './tab-stack';
 

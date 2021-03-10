@@ -3,8 +3,8 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { CompositeNavigationProp } from '@react-navigation/native';
-import { MainTabParamsList } from './tab-stack';
 import { SettingsScreen } from '../screens/SettingsScreen';
+import { MainTabParamsList } from './tab-stack';
 
 export type SettingsStackParamList = {
   Root: undefined;
