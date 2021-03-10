@@ -30,8 +30,8 @@ local.properties
 *.iml
 
 # Visual Studio Code
-#
-.vscode/
+##
+#.vscode/
 
 # node.js
 #

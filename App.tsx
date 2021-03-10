@@ -8,12 +8,15 @@
  * @format
  */
 
-import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
+
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
 import { enableScreens } from 'react-native-screens';
-import { MainStack } from './src/navigation/main-stack';
-import { SearchScreen } from './src/screens/SearchScreen';
+
+import { SearchStackScreen } from './src/navigation/search-stack';
+import { SettingsTab } from './src/navigation/settings-stack';
+import { MainTab } from './src/navigation/tab-stack';
 
 enableScreens();
 
@@ -21,13 +24,10 @@ const App = () => {
   return (
     <NavigationContainer>
       <StatusBar barStyle="dark-content" />
-      <MainStack.Navigator>
-        <MainStack.Screen
-          name="Search"
-          component={SearchScreen}
-          options={{ headerLargeTitle: true, title: 'Search' }}
-        />
-      </MainStack.Navigator>
+      <MainTab.Navigator>
+        <MainTab.Screen name="Search" component={SearchStackScreen} />
+        <MainTab.Screen name="Settings" component={SettingsTab} />
+      </MainTab.Navigator>
     </NavigationContainer>
   );
 };
