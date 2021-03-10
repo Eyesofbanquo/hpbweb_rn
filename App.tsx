@@ -8,10 +8,12 @@
  * @format
  */
 
-import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
+
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
 import { enableScreens } from 'react-native-screens';
+
 import { SearchStackScreen } from './src/navigation/search-stack';
 import { SettingsTab } from './src/navigation/settings-stack';
 import { MainTab } from './src/navigation/tab-stack';

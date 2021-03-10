@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { SettingsStackParamList } from '../navigation/settings-stack';
+
 import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { View, Text } from 'react-native';
+
+import { SettingsStackParamList } from '../navigation/settings-stack';
 
 type NavigationProps = StackNavigationProp<SettingsStackParamList, 'Root'>;
 type RouteProps = RouteProp<SettingsStackParamList, 'Root'>;
