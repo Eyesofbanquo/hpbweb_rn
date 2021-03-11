@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import axios from 'axios';
-import { Text, ScrollView, FlatList, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
+import { imageUrlFactor } from '../factories/image-url-factory';
+import { useNetwork } from '../hooks/useNetwork';
+import { LiveSearch } from '../model/live-search';
 import { SearchStackParamList } from '../navigation/search-stack';
 
 export type SearchScreenNavigationProp = StackNavigationProp<
@@ -15,34 +17,19 @@ export type SearchScreenNavigationProp = StackNavigationProp<
 
 export type SearchScreenRouteProp = RouteProp<SearchStackParamList, 'Search'>;
 
-const imageUrlFactor = (slug: string) => {
-  return `https://books.images.hpb.com/${slug}/large.jpg`;
-};
-
 export const SearchScreen: React.FC<{
   navigation: SearchScreenNavigationProp;
   route: SearchScreenRouteProp;
-}> = ({ navigation, route }) => {
-  const [books, setBooks] = useState([]);
-  useEffect(() => {
-    axios
-      .get(
-        'https://8x6i7fbaae.execute-api.us-east-1.amazonaws.com/dev/search/live',
-        {
-          params: { search: 'Christopher Moore' },
-        },
-      )
-      .then((response) => {
-        setBooks(response.data);
-        console.log(response.data.map((hit) => imageUrlFactor(hit.upc)));
-      })
-      .catch((error) => console.log(error));
-  }, []);
+}> = () => {
+  const { response } = useNetwork<LiveSearch>({
+    endpoint: 'live',
+    options: { search: 'Christopher Moore' },
+  });
 
   return (
     <View style={{ flex: 1, height: '100%' }}>
       <FlatList
-        data={books}
+        data={response}
         renderItem={({ item }) => {
           return (
             item.slug && (
