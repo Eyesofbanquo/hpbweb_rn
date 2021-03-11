@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Text, ScrollView, FlatList, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
+import { useNetwork } from '../hooks/useNetwork';
 import { SearchStackParamList } from '../navigation/search-stack';
 
 export type SearchScreenNavigationProp = StackNavigationProp<
@@ -24,6 +25,7 @@ export const SearchScreen: React.FC<{
   route: SearchScreenRouteProp;
 }> = ({ navigation, route }) => {
   const [books, setBooks] = useState([]);
+
   useEffect(() => {
     axios
       .get(
