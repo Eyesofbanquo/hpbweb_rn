@@ -27,7 +27,7 @@ export function useNetwork<T>(props: Props) {
   if (endpoint === 'product') {
     path = '/' + endpoint;
   } else {
-    path = '/search' + endpoint;
+    path = '/search/' + endpoint;
   }
 
   useEffect(
