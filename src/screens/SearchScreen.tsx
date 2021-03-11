@@ -3,6 +3,7 @@ import React from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { FlatList, View } from 'react-native';
+import { SearchBar } from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
 
 import { imageUrlFactor } from '../factories/image-url-factory';
@@ -28,6 +29,7 @@ export const SearchScreen: React.FC<{
 
   return (
     <View style={{ flex: 1, height: '100%' }}>
+      <SearchBar placeholder="Type Here..." platform="ios" />
       <FlatList
         data={response}
         renderItem={({ item }) => {
