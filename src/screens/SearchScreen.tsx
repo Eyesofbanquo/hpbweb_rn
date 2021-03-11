@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-// import { BOOK_API_URL } from '@env';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import axios from 'axios';
 import { Text, ScrollView, FlatList, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import { SearchStackParamList } from '../navigation/search-stack';
 
@@ -14,6 +14,10 @@ export type SearchScreenNavigationProp = StackNavigationProp<
 >;
 
 export type SearchScreenRouteProp = RouteProp<SearchStackParamList, 'Search'>;
+
+const imageUrlFactor = (slug: string) => {
+  return `https://books.images.hpb.com/${slug}/large.jpg`;
+};
 
 export const SearchScreen: React.FC<{
   navigation: SearchScreenNavigationProp;
@@ -29,8 +33,8 @@ export const SearchScreen: React.FC<{
         },
       )
       .then((response) => {
-        setBooks(response.data.hits);
-        console.log(response.data);
+        setBooks(response.data);
+        console.log(response.data.map((hit) => imageUrlFactor(hit.upc)));
       })
       .catch((error) => console.log(error));
   }, []);
@@ -39,11 +43,20 @@ export const SearchScreen: React.FC<{
     <View style={{ flex: 1, height: '100%' }}>
       <FlatList
         data={books}
-        renderItem={({ item }) => (
-          <View style={{ flex: 1, flexDirection: 'column', margin: 1 }}>
-            <Text>item.author</Text>
-          </View>
-        )}
+        renderItem={({ item }) => {
+          return (
+            item.slug && (
+              <FastImage
+                style={{ width: '33%', height: 200 }}
+                source={{
+                  uri: imageUrlFactor(item.upc),
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+            )
+          );
+        }}
         numColumns={3}
         keyExtractor={(item, index) => `${index}`}
       />
