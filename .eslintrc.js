@@ -26,5 +26,7 @@ module.exports = {
         alphabetize: { order: 'asc', caseInsensitive: true },
       },
     ],
+    'react/prop-types': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
   },
 };
