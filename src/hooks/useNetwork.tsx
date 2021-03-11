@@ -33,12 +33,9 @@ export function useNetwork<T>(props: Props) {
   useEffect(
     () => {
       axios
-        .get(
-          'https://8x6i7fbaae.execute-api.us-east-1.amazonaws.com/dev' + path,
-          {
-            params: { search: options.search },
-          },
-        )
+        .get(BASE_URL + path, {
+          params: { search: options.search },
+        })
         .then((res) => {
           setResponse(res.data as T[]);
         })

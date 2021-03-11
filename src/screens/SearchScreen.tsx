@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import axios from 'axios';
-import { Text, ScrollView, FlatList, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import { imageUrlFactor } from '../factories/image-url-factory';
@@ -21,7 +20,7 @@ export type SearchScreenRouteProp = RouteProp<SearchStackParamList, 'Search'>;
 export const SearchScreen: React.FC<{
   navigation: SearchScreenNavigationProp;
   route: SearchScreenRouteProp;
-}> = ({ navigation, route }) => {
+}> = () => {
   const { response } = useNetwork<LiveSearch>({
     endpoint: 'live',
     options: { search: 'Christopher Moore' },
