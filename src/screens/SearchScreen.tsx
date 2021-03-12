@@ -61,7 +61,7 @@ export const SearchScreen: React.FC<{
           data={response}
           renderItem={({ item, index }) => {
             return (
-              item.slug && (
+              item.upc && (
                 <FastImage
                   key={index}
                   style={{ width: '33%', height: 200 }}

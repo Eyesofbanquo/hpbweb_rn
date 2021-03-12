@@ -11,18 +11,14 @@ const BASE_URL = `https://aiief0969h.execute-api.us-east-1.amazonaws.com/default
 
 export const useBookImageService = (upc: string) => {
   const [response, setResponse] = useState<BookImageServiceProps>();
-  const [useFallback, setUseFallback] = useState<boolean>(false);
 
   useEffect(() => {
     axios.get(BASE_URL + upc).then((res) => {
       setResponse(res.data as BookImageServiceProps);
     });
-  }, [useFallback, upc]);
+  }, [upc]);
 
   return {
     response,
-    useFallbackUri: (condition: boolean) => {
-      setUseFallback(condition);
-    },
   };
 };
