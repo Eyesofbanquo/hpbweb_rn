@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import axios from 'axios';
 
@@ -20,6 +20,10 @@ interface Props {
 
 export function useNetwork<T>(props: Props) {
   const [response, setResponse] = useState<T[]>([]);
+  const [searchText, setSearchText] = useState<string>(
+    props.options.search ?? '',
+  );
+
   const { endpoint, options } = props;
 
   let path: string;
@@ -30,21 +34,26 @@ export function useNetwork<T>(props: Props) {
     path = '/search/' + endpoint;
   }
 
+  const updateSearch = (search: string) => {
+    setSearchText(search);
+  };
+
   useEffect(
     () => {
       axios
         .get(BASE_URL + path, {
-          params: { search: options.search },
+          params: { search: searchText },
         })
         .then((res) => {
           setResponse(res.data as T[]);
         })
         .catch((error) => console.log(error));
     },
-    [], // eslint-disable-line react-hooks/exhaustive-deps
+    [searchText], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   return {
     response: response,
+    updateSearch: updateSearch,
   };
 }

@@ -1,3 +1,3 @@
-export const imageUrlFactor = (slug: string) => {
-  return `https://books.images.hpb.com/${slug}/large.jpg`;
+export const imageUrlFactor = (upc: string) => {
+  return `https://books.images.hpb.com/${upc}/large.jpg`;
 };
