@@ -1,6 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
-import axios from 'axios';
+import axios, {
+  AxiosStatic,
+  CancelTokenSource,
+  CancelTokenStatic,
+} from 'axios';
 
 import { HPBEndpoint } from '../networking/hpb-endpoint';
 
@@ -18,6 +22,7 @@ interface Props {
   options?: NetworkOptions;
 }
 
+let token: CancelTokenSource;
 export function useNetwork<T>(props: Props) {
   const [response, setResponse] = useState<T[]>([]);
   const [searchText, setSearchText] = useState<string>(
@@ -40,14 +45,26 @@ export function useNetwork<T>(props: Props) {
 
   useEffect(
     () => {
+      if (typeof token !== typeof undefined) {
+        token.cancel('Operation canceled');
+      }
+
+      token = axios.CancelToken.source();
+
       axios
         .get(BASE_URL + path, {
           params: { search: searchText },
+          cancelToken: token.token,
         })
         .then((res) => {
           setResponse(res.data as T[]);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          if (axios.isCancel(error)) {
+            return { cancelPreviousQuery: true };
+          }
+          console.log(error);
+        });
     },
     [searchText], // eslint-disable-line react-hooks/exhaustive-deps
   );
