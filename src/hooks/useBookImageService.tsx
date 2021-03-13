@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
-interface BookImageServiceProps {
+export interface BookImageServiceProps {
   hpb: string;
   alibris: string;
+  missing: 'https://books.images.hpb.com/missing.png';
 }
 
 const BASE_URL = `https://aiief0969h.execute-api.us-east-1.amazonaws.com/default/isbn/`;

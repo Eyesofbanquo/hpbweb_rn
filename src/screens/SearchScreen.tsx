@@ -10,6 +10,7 @@ import { imageUrlFactor } from '../factories/image-url-factory';
 import { useNetwork } from '../hooks/useNetwork';
 import { LiveSearch } from '../model/live-search';
 import { SearchStackParamList } from '../navigation/search-stack';
+import { BookImage } from '../views/BookImage';
 
 export type SearchScreenNavigationProp = StackNavigationProp<
   SearchStackParamList,
@@ -18,14 +19,14 @@ export type SearchScreenNavigationProp = StackNavigationProp<
 
 export type SearchScreenRouteProp = RouteProp<SearchStackParamList, 'Search'>;
 
-const filteredResponse = (predicate: string, response?: LiveSearch[]) => {
-  if (Array.isArray(response) === false) {
+const bookFilteredList = (response: LiveSearch[]) => {
+  if (response.length === 0 || Array.isArray(response) === false) {
     return [];
   }
-  if (predicate.length === 0) {
-    return response;
-  }
-  return response.filter((book) => book.name.includes(predicate));
+
+  return response.filter(
+    (res) => res.type.toLowerCase().includes('book') && res.upc !== undefined,
+  );
 };
 
 export const SearchScreen: React.FC<{
@@ -46,7 +47,7 @@ export const SearchScreen: React.FC<{
     updateNetworkSearch(search);
   };
 
-  console.log(response, searchText);
+  console.log(bookFilteredList(response).length, searchText);
 
   return (
     <View style={{ flex: 1, height: '100%' }}>
@@ -58,21 +59,9 @@ export const SearchScreen: React.FC<{
       />
       {response.length > 0 && (
         <FlatList
-          data={response}
+          data={bookFilteredList(response)}
           renderItem={({ item, index }) => {
-            return (
-              item.upc && (
-                <FastImage
-                  key={index}
-                  style={{ width: '33%', height: 200 }}
-                  source={{
-                    uri: imageUrlFactor(item.upc),
-                    priority: FastImage.priority.normal,
-                  }}
-                  resizeMode={FastImage.resizeMode.contain}
-                />
-              )
-            );
+            return item.upc && <BookImage upc={item.upc} index={`${index}`} />;
           }}
           numColumns={3}
           keyExtractor={(item, index) => `${index}`}
