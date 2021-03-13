@@ -2,11 +2,10 @@ import React, { useState, useCallback } from 'react';
 
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { FlatList, View, Text } from 'react-native';
+import _ from 'lodash';
+import { FlatList, View } from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import FastImage from 'react-native-fast-image';
 
-import { imageUrlFactor } from '../factories/image-url-factory';
 import { useNetwork } from '../hooks/useNetwork';
 import { LiveSearch } from '../model/live-search';
 import { SearchStackParamList } from '../navigation/search-stack';
@@ -19,6 +18,7 @@ export type SearchScreenNavigationProp = StackNavigationProp<
 
 export type SearchScreenRouteProp = RouteProp<SearchStackParamList, 'Search'>;
 
+type SearchDebouncedType = _.DebouncedFunc<(searchText: string) => void>;
 const bookFilteredList = (response: LiveSearch[]) => {
   if (response.length === 0 || Array.isArray(response) === false) {
     return [];
@@ -34,6 +34,9 @@ export const SearchScreen: React.FC<{
   route: SearchScreenRouteProp;
 }> = () => {
   const [searchText, setSearchText] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<
+    SearchDebouncedType | undefined
+  >(undefined);
   const {
     response,
     updateSearch: updateNetworkSearch,
@@ -44,10 +47,23 @@ export const SearchScreen: React.FC<{
 
   const updateSearch = (search: string) => {
     setSearchText(search);
-    updateNetworkSearch(search);
+
+    const makeRequest = _.debounce(makeDebouncedRequest, 300);
+
+    setSearchQuery((previous) => {
+      if (previous !== undefined && previous.cancel) {
+        previous.cancel();
+      }
+
+      return makeRequest;
+    });
+
+    makeRequest(search);
   };
 
-  console.log(bookFilteredList(response).length, searchText);
+  const makeDebouncedRequest = (search: string) => {
+    updateNetworkSearch(search);
+  };
 
   return (
     <View style={{ flex: 1, height: '100%' }}>
