@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 import {
   BookImageServiceProps,
@@ -24,6 +25,8 @@ export const BookImage: React.FC<Props> = ({ index, upc }) => {
     'hpb',
   );
 
+  const { width, height } = Dimensions.get('window');
+
   const onError = () => {
     // setFallback(true);
     console.log(currentSource);
@@ -40,13 +43,20 @@ export const BookImage: React.FC<Props> = ({ index, upc }) => {
   };
 
   if (!response) {
-    return <View style={{ ...styles.image, backgroundColor: 'red' }} />;
+    return (
+      <SkeletonPlaceholder key={index}>
+        <SkeletonPlaceholder.Item
+          width={width / 3}
+          height={styles.image.height}
+        />
+      </SkeletonPlaceholder>
+    );
   }
 
   return (
     <FastImage
       key={index}
-      style={styles.image}
+      style={{ width: width / 3, ...styles.image }}
       source={{
         uri: response[currentSource],
         priority: FastImage.priority.normal,

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import _ from 'lodash';
-import { FlatList, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 
 import { useNetwork } from '../hooks/useNetwork';
