@@ -28,6 +28,7 @@ export function useNetwork<T>(props: Props) {
   const [searchText, setSearchText] = useState<string>(
     props.options.search ?? '',
   );
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { endpoint, options } = props;
 
@@ -41,6 +42,10 @@ export function useNetwork<T>(props: Props) {
 
   const updateSearch = (search: string) => {
     setSearchText(search);
+  };
+
+  const updateLoading = (condition: boolean) => {
+    setLoading(condition);
   };
 
   useEffect(
@@ -58,8 +63,10 @@ export function useNetwork<T>(props: Props) {
         })
         .then((res) => {
           setResponse(res.data as T[]);
+          setLoading(false);
         })
         .catch((error) => {
+          setLoading(false);
           if (axios.isCancel(error)) {
             return { cancelPreviousQuery: true };
           }
@@ -71,6 +78,8 @@ export function useNetwork<T>(props: Props) {
 
   return {
     response: response,
+    isLoading: loading,
+    setIsLoading: updateLoading,
     updateSearch: updateSearch,
   };
 }

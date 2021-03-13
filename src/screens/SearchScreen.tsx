@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -37,9 +37,12 @@ export const SearchScreen: React.FC<{
   const [searchQuery, setSearchQuery] = useState<
     SearchDebouncedType | undefined
   >(undefined);
+  const [showLoading, setShowLoading] = useState<boolean>(false);
   const {
     response,
     updateSearch: updateNetworkSearch,
+    setIsLoading,
+    isLoading,
   } = useNetwork<LiveSearch>({
     endpoint: 'live',
     options: { search: searchText },
@@ -47,6 +50,7 @@ export const SearchScreen: React.FC<{
 
   const updateSearch = (search: string) => {
     setSearchText(search);
+    setIsLoading(true);
 
     const makeRequest = _.debounce(makeDebouncedRequest, 300);
 
@@ -72,6 +76,7 @@ export const SearchScreen: React.FC<{
         platform="ios"
         value={searchText}
         onChangeText={updateSearch}
+        showLoading={isLoading}
       />
       {response.length > 0 && (
         <FlatList
