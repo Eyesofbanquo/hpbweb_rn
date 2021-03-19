@@ -2,11 +2,11 @@ module.exports = {
   root: true,
   extends: [
     '@react-native-community',
-    'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
     'plugin:prettier/recommended',
   ],
-  plugins: ['@typescript-eslint', 'import'],
+  plugins: ['@typescript-eslint', 'react', 'react-native', 'import'],
   parser: '@typescript-eslint/parser',
   rules: {
     'import/order': [
@@ -28,5 +28,6 @@ module.exports = {
     ],
     'react/prop-types': 'off',
     '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
   },
 };
