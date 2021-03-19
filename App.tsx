@@ -8,39 +8,23 @@
  * @format
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 
+import remoteConfig from '@react-native-firebase/remote-config';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 
+import { useSetupConfig } from './src/config/useConfig';
 import { SearchStackScreen } from './src/navigation/search-stack';
 import { SettingsTab } from './src/navigation/settings-stack';
 import { MainTab } from './src/navigation/tab-stack';
-import remoteConfig from '@react-native-firebase/remote-config';
 
 enableScreens();
 
 const App = () => {
-  useEffect(() => {
-    remoteConfig()
-      .setConfigSettings({
-        minimumFetchIntervalMillis: 30,
-      })
-      .then(() => {
-        return remoteConfig().setDefaults({
-          aweseome_new_feature: 'disabled',
-        });
-      })
-      .then(() => remoteConfig().fetchAndActivate())
-      .then((fetchedRemotely) => {
-        if (fetchedRemotely) {
-          console.log('Configs were retrieved and activated');
-        } else {
-          console.log('NO configs were fetched');
-        }
-      });
-  }, []);
+  useSetupConfig();
+
   const awesomeNewFeature = remoteConfig().getValue('awesome_new_feature');
 
   console.log(awesomeNewFeature.getSource());
