@@ -29,5 +29,6 @@ module.exports = {
     'react/prop-types': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'react-hooks/exhaustive-deps': 'off',
   },
 };
