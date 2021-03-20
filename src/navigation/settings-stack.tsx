@@ -5,9 +5,9 @@ import { CompositeNavigationProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
-import { SettingsScreen } from '../screens/SettingsScreen';
-
 import { MainTabParamsList } from './tab-stack';
+
+import { SettingsScreen } from '../screens/SettingsScreen';
 
 export type SettingsStackParamList = {
   Root: undefined;

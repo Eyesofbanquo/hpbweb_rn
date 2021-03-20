@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import _ from 'lodash';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, View, TouchableOpacity } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 
 import { useNetwork } from '../hooks/useNetwork';
@@ -32,7 +32,7 @@ const bookFilteredList = (response: LiveSearch[]) => {
 export const SearchScreen: React.FC<{
   navigation: SearchScreenNavigationProp;
   route: SearchScreenRouteProp;
-}> = () => {
+}> = ({ navigation }) => {
   const [searchText, setSearchText] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<
     SearchDebouncedType | undefined
@@ -82,7 +82,20 @@ export const SearchScreen: React.FC<{
         <FlatList
           data={bookFilteredList(response)}
           renderItem={({ item, index }) => {
-            return item.upc && <BookImage upc={item.upc} index={`${index}`} />;
+            return (
+              item.upc && (
+                <BookImage
+                  upc={item.upc}
+                  index={`${index}`}
+                  onPress={() => {
+                    navigation.navigate('BookProduct', {
+                      slug: item.slug,
+                      navigationTitle: item.name,
+                    });
+                  }}
+                />
+              )
+            );
           }}
           numColumns={3}
           keyExtractor={(item, index) => `${index}`}

@@ -5,12 +5,14 @@ import { CompositeNavigationProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
-import { SearchScreen } from '../screens/SearchScreen';
-
 import { MainTabParamsList } from './tab-stack';
+
+import { BookScreen } from '../screens/BookScreen';
+import { SearchScreen } from '../screens/SearchScreen';
 
 export type SearchStackParamList = {
   Search: undefined;
+  BookProduct: { slug: string; navigationTitle: string } | undefined;
 };
 export const SearchStack = createNativeStackNavigator<SearchStackParamList>();
 
@@ -22,7 +24,8 @@ type SearchStackScreenProps = CompositeNavigationProp<
 export const SearchStackScreen: React.FC<{
   navigation: SearchStackScreenProps;
 }> = () => (
-  <SearchStack.Navigator>
+  <SearchStack.Navigator initialRouteName="Search">
+    <SearchStack.Screen name="BookProduct" component={BookScreen} />
     <SearchStack.Screen
       name="Search"
       component={SearchScreen}
