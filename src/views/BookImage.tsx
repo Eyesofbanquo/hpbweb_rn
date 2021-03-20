@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { StyleSheet, View, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions, TouchableOpacity } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
@@ -12,13 +12,14 @@ import {
 interface Props {
   index: string;
   upc: string;
+  onPress: () => void;
 }
 
 type CurrentImageSource = 'hpb' | 'alibris' | 'missing';
 
 type BookImageServiceKeys = keyof BookImageServiceProps;
 
-export const BookImage: React.FC<Props> = ({ index, upc }) => {
+export const BookImage: React.FC<Props> = ({ index, upc, onPress }) => {
   const { response } = useBookImageService(upc);
   const [fallback, setFallback] = useState<boolean>(false);
   const [currentSource, setCurrentSource] = useState<BookImageServiceKeys>(
@@ -54,16 +55,20 @@ export const BookImage: React.FC<Props> = ({ index, upc }) => {
   }
 
   return (
-    <FastImage
-      key={index}
+    <TouchableOpacity
       style={{ width: width / 3, ...styles.image }}
-      source={{
-        uri: response[currentSource],
-        priority: FastImage.priority.normal,
-      }}
-      resizeMode={FastImage.resizeMode.contain}
-      onError={onError}
-    />
+      onPress={onPress}>
+      <FastImage
+        key={index}
+        style={{ flex: 1 }}
+        source={{
+          uri: response[currentSource],
+          priority: FastImage.priority.normal,
+        }}
+        resizeMode={FastImage.resizeMode.contain}
+        onError={onError}
+      />
+    </TouchableOpacity>
   );
 };
 
