@@ -20,13 +20,11 @@ interface Props {
 
 let token: CancelTokenSource;
 export function useNetwork<T>(props: Props) {
-  const [response, setResponse] = useState<T[]>([]);
-  const [searchText, setSearchText] = useState<string>(
-    props.options.search ?? '',
-  );
-  const [loading, setLoading] = useState<boolean>(false);
-
   const { endpoint, options } = props;
+
+  const [response, setResponse] = useState<T[]>([]);
+  const [searchText, setSearchText] = useState<string>(options.search ?? '');
+  const [loading, setLoading] = useState<boolean>(false);
 
   let path: string;
 
