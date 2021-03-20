@@ -34,6 +34,15 @@ export const BookScreen: React.FC<BookScreenProps> = ({
     });
   }, []);
 
+  const { response, setIsLoading, isLoading } = useNetwork<Product>({
+    endpoint: 'product',
+    options: {
+      slug: slug,
+    },
+  });
+
+  console.log(response);
+
   return (
     <View>
       <Text>Hi there from ID: {slug} </Text>
