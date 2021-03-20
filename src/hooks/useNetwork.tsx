@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import axios, { CancelTokenSource } from 'axios';
 
@@ -26,14 +26,6 @@ export function useNetwork<T>(props: Props) {
   const [searchText, setSearchText] = useState<string>(options.search ?? '');
   const [loading, setLoading] = useState<boolean>(false);
 
-  let path: string;
-
-  if (endpoint === 'product') {
-    path = '/' + endpoint;
-  } else {
-    path = '/search/' + endpoint;
-  }
-
   const updateSearch = (search: string) => {
     setSearchText(search);
   };
@@ -41,6 +33,27 @@ export function useNetwork<T>(props: Props) {
   const updateLoading = (condition: boolean) => {
     setLoading(condition);
   };
+
+  const networkParams = useCallback(() => {
+    let path: string;
+    let config = {};
+    if (endpoint === 'product') {
+      path = '/' + endpoint;
+      config = { ...config, params: { slug: options.slug ?? '' } };
+      return { path: path, config: config };
+    } else {
+      path = '/search/' + endpoint;
+      config = {
+        ...config,
+        params: { search: searchText },
+        cancelToken: token.token,
+      };
+      return {
+        path: path,
+        config: config,
+      };
+    }
+  }, [endpoint, searchText, options]);
 
   useEffect(
     () => {
@@ -51,10 +64,7 @@ export function useNetwork<T>(props: Props) {
       token = axios.CancelToken.source();
 
       axios
-        .get(BASE_URL + path, {
-          params: { search: searchText },
-          cancelToken: token.token,
-        })
+        .get(BASE_URL + networkParams().path, networkParams().config)
         .then((res) => {
           setResponse(res.data as T[]);
           setLoading(false);
