@@ -18,6 +18,8 @@
     "@react-navigation/stack": "^5.14.3",
     "@types/axios": "^0.14.0",
     "@types/lodash": "^4.14.168",
+    "@types/styled-components": "^5.1.9",
+    "@types/styled-system": "^5.1.10",
     "axios": "^0.21.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-react": "^7.22.0",
@@ -32,7 +34,9 @@
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.18.1",
     "react-native-skeleton-placeholder": "^3.0.4",
-    "react-native-vector-icons": "^8.1.0"
+    "react-native-vector-icons": "^8.1.0",
+    "styled-components": "^5.2.1",
+    "styled-system": "^5.1.5"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
