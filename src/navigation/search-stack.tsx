@@ -25,7 +25,11 @@ export const SearchStackScreen: React.FC<{
   navigation: SearchStackScreenProps;
 }> = () => (
   <SearchStack.Navigator initialRouteName="Search">
-    <SearchStack.Screen name="BookProduct" component={BookScreen} />
+    <SearchStack.Screen
+      name="BookProduct"
+      component={BookScreen}
+      options={{ title: '' }}
+    />
     <SearchStack.Screen
       name="Search"
       component={SearchScreen}

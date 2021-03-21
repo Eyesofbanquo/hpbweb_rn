@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { View, Text } from 'react-native';
 
+import { useNetwork } from '../hooks/useNetwork';
+import { Product } from '../model/product';
 import { SearchStackParamList } from '../navigation/search-stack';
 
 export type BookScreenNavigationProp = StackNavigationProp<
@@ -25,13 +27,29 @@ export const BookScreen: React.FC<BookScreenProps> = ({
   route,
 }) => {
   const { slug, navigationTitle } = route.params;
-  navigation.setOptions({
-    title: navigationTitle,
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: navigationTitle,
+    });
+  }, []);
+
+  const { response, setIsLoading, isLoading } = useNetwork<Product>({
+    endpoint: 'product',
+    options: {
+      slug: slug,
+    },
   });
+
+  if (!response) {
+    return null;
+  }
+
+  console.log(response.name);
 
   return (
     <View>
-      <Text>Hi there from ID: {slug} </Text>
+      <Text>Hi there from ID: {response.name} </Text>
     </View>
   );
 };

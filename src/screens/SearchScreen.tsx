@@ -43,7 +43,7 @@ export const SearchScreen: React.FC<{
     updateSearch: updateNetworkSearch,
     setIsLoading,
     isLoading,
-  } = useNetwork<LiveSearch>({
+  } = useNetwork<[LiveSearch]>({
     endpoint: 'live',
     options: { search: searchText },
   });
@@ -68,6 +68,10 @@ export const SearchScreen: React.FC<{
   const makeDebouncedRequest = (search: string) => {
     updateNetworkSearch(search);
   };
+
+  if (response === undefined) {
+    return null;
+  }
 
   return (
     <View style={{ flex: 1, height: '100%' }}>
