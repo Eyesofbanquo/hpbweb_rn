@@ -22,7 +22,7 @@ let token: CancelTokenSource;
 export function useNetwork<T>(props: Props) {
   const { endpoint, options } = props;
 
-  const [response, setResponse] = useState<T[]>([]);
+  const [response, setResponse] = useState<T>(undefined);
   const [searchText, setSearchText] = useState<string>(options.search ?? '');
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -66,7 +66,7 @@ export function useNetwork<T>(props: Props) {
       axios
         .get(BASE_URL + networkParams().path, networkParams().config)
         .then((res) => {
-          setResponse(res.data as T[]);
+          setResponse(res.data as T);
           setLoading(false);
         })
         .catch((error) => {
