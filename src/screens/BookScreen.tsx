@@ -41,11 +41,15 @@ export const BookScreen: React.FC<BookScreenProps> = ({
     },
   });
 
-  console.log(response);
+  if (!response) {
+    return null;
+  }
+
+  console.log(response.name);
 
   return (
     <View>
-      <Text>Hi there from ID: {slug} </Text>
+      <Text>Hi there from ID: {response.name} </Text>
     </View>
   );
 };
