@@ -14,7 +14,7 @@ import remoteConfig from '@react-native-firebase/remote-config';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
 import { enableScreens } from 'react-native-screens';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components/native';
 
 import { useSetupConfig } from './src/config/useConfig';
 import { SearchStackScreen } from './src/navigation/search-stack';
