@@ -12,6 +12,8 @@ import {
 interface Props {
   index?: string;
   upc: string;
+  width?: number;
+  height?: number;
   onPress?: () => void;
 }
 
@@ -19,7 +21,13 @@ type CurrentImageSource = 'hpb' | 'alibris' | 'missing';
 
 type BookImageServiceKeys = keyof BookImageServiceProps;
 
-export const BookImage: React.FC<Props> = ({ index, upc, onPress }) => {
+export const BookImage: React.FC<Props> = ({
+  index,
+  upc,
+  onPress,
+  width: injectedWidth,
+  height: injectedHeight,
+}) => {
   const { response } = useBookImageService(upc);
   const [fallback, setFallback] = useState<boolean>(false);
   const [currentSource, setCurrentSource] = useState<BookImageServiceKeys>(
@@ -27,6 +35,8 @@ export const BookImage: React.FC<Props> = ({ index, upc, onPress }) => {
   );
 
   const { width, height } = Dimensions.get('window');
+  const usableWidth = injectedWidth ? injectedWidth : width;
+  const usableHeight = injectedHeight ? injectedHeight : height;
 
   const onError = () => {
     // setFallback(true);
@@ -56,7 +66,7 @@ export const BookImage: React.FC<Props> = ({ index, upc, onPress }) => {
 
   return (
     <TouchableOpacity
-      style={{ width: width / 3, ...styles.image }}
+      style={{ width: usableWidth / 3, height: usableHeight }}
       onPress={onPress}>
       <FastImage
         key={index}

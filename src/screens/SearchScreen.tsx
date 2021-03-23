@@ -91,6 +91,7 @@ export const SearchScreen: React.FC<{
                 <BookImage
                   upc={item.upc}
                   index={`${index}`}
+                  height={200}
                   onPress={() => {
                     navigation.navigate('BookProduct', {
                       slug: item.slug,
