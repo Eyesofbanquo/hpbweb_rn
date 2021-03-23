@@ -19,6 +19,7 @@ import {
 import { useNetwork } from '../hooks/useNetwork';
 import { Product } from '../model/product';
 import { SearchStackParamList } from '../navigation/search-stack';
+import { HPText } from '../ui/text';
 import { theme } from '../ui/theme';
 
 export type BookScreenNavigationProp = StackNavigationProp<
@@ -71,7 +72,9 @@ export const BookScreen: React.FC<BookScreenProps> = ({
       <View>
         <Text>Hi there from ID: {response.name} </Text>
       </View>
-      <Box bg="black" flex={1} />
+      <HPText fontSize="largeTitle" fontWeight="light">
+        This is text
+      </HPText>
     </>
   );
 };
