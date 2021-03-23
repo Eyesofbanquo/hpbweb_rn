@@ -12,7 +12,9 @@ import { SearchScreen } from '../screens/SearchScreen';
 
 export type SearchStackParamList = {
   Search: undefined;
-  BookProduct: { slug: string; navigationTitle: string } | undefined;
+  BookProduct:
+    | { slug: string; navigationTitle: string; upc: string }
+    | undefined;
 };
 export const SearchStack = createNativeStackNavigator<SearchStackParamList>();
 

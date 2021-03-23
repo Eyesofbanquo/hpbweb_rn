@@ -95,6 +95,7 @@ export const SearchScreen: React.FC<{
                     navigation.navigate('BookProduct', {
                       slug: item.slug,
                       navigationTitle: item.name,
+                      upc: item.upc,
                     });
                   }}
                 />

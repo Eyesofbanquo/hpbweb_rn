@@ -10,9 +10,9 @@ import {
 } from '../hooks/useBookImageService';
 
 interface Props {
-  index: string;
+  index?: string;
   upc: string;
-  onPress: () => void;
+  onPress?: () => void;
 }
 
 type CurrentImageSource = 'hpb' | 'alibris' | 'missing';
