@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 
-import { StyleSheet, View, Dimensions, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Dimensions,
+  TouchableOpacity,
+  ViewProps,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
@@ -21,12 +27,13 @@ type CurrentImageSource = 'hpb' | 'alibris' | 'missing';
 
 type BookImageServiceKeys = keyof BookImageServiceProps;
 
-export const BookImage: React.FC<Props> = ({
+export const BookImage: React.FC<Props & ViewProps> = ({
   index,
   upc,
   onPress,
   width: injectedWidth,
   height: injectedHeight,
+  style,
 }) => {
   const { response } = useBookImageService(upc);
   const [fallback, setFallback] = useState<boolean>(false);

@@ -21,6 +21,7 @@ import { Product } from '../model/product';
 import { SearchStackParamList } from '../navigation/search-stack';
 import { HPText } from '../ui/text';
 import { theme } from '../ui/theme';
+import { BookImage } from '../views/BookImage';
 
 export type BookScreenNavigationProp = StackNavigationProp<
   SearchStackParamList,
@@ -46,7 +47,7 @@ export const BookScreen: React.FC<BookScreenProps> = ({
   navigation,
   route,
 }) => {
-  const { slug, navigationTitle } = route.params;
+  const { slug, navigationTitle, upc } = route.params;
 
   useEffect(() => {
     navigation.setOptions({
@@ -65,10 +66,9 @@ export const BookScreen: React.FC<BookScreenProps> = ({
     return null;
   }
 
-  console.log(response.name);
-
   return (
     <>
+      <BookImage upc={upc} height={200} />
       <View>
         <Text>Hi there from ID: {response.name} </Text>
       </View>
