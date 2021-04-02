@@ -10,6 +10,7 @@
 
 import React from 'react';
 
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import remoteConfig from '@react-native-firebase/remote-config';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
@@ -24,6 +25,11 @@ import { theme } from './src/ui/theme';
 
 enableScreens();
 
+const client = new ApolloClient({
+  uri: 'https://8chh8ip4l4.execute-api.us-east-1.amazonaws.com/dev/graphql',
+  cache: new InMemoryCache(),
+});
+
 const App = () => {
   useSetupConfig();
 
@@ -34,15 +40,17 @@ const App = () => {
     console.log('this was activated');
   }
   return (
-    <NavigationContainer>
-      <StatusBar barStyle="dark-content" />
-      <ThemeProvider theme={theme}>
-        <MainTab.Navigator>
-          <MainTab.Screen name="Search" component={SearchStackScreen} />
-          <MainTab.Screen name="Settings" component={SettingsTab} />
-        </MainTab.Navigator>
-      </ThemeProvider>
-    </NavigationContainer>
+    <ApolloProvider client={client}>
+      <NavigationContainer>
+        <StatusBar barStyle="dark-content" />
+        <ThemeProvider theme={theme}>
+          <MainTab.Navigator>
+            <MainTab.Screen name="Search" component={SearchStackScreen} />
+            <MainTab.Screen name="Settings" component={SettingsTab} />
+          </MainTab.Navigator>
+        </ThemeProvider>
+      </NavigationContainer>
+    </ApolloProvider>
   );
 };
 
