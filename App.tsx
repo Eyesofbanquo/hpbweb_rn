@@ -16,9 +16,9 @@ import {
   ApolloProvider,
   gql,
 } from '@apollo/client';
-import { NormalSearch } from '@eyesofbanquo/hpbtypes';
 import remoteConfig from '@react-native-firebase/remote-config';
 import { NavigationContainer } from '@react-navigation/native';
+import { values } from 'lodash';
 import { StatusBar } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import { ThemeProvider } from 'styled-components/native';
@@ -40,17 +40,19 @@ const BOOK_Q = gql`
 `;
 
 const typeDefs = gql`
-  type Book {
+  extend type Book {
     id: String
     category: String
   }
 
-  type BookResult {
+  extend type BookResult {
+    id: String
     books: [Book]
   }
 
   extend type Query {
-    books: BookResult
+    bookResults: BookResult
+    books: [Book]
   }
 `;
 
@@ -63,11 +65,37 @@ const client = new ApolloClient({
       Search: ['NormalSearch', 'TopSearch', 'LiveSearch'],
     },
     typePolicies: {
-      books: {},
+      Book: {
+        keyFields: ['id', 'category'],
+        fields: {
+          id: {
+            merge: true,
+          },
+        },
+      },
+      books: {
+        fields: {
+          books: {
+            merge: (existing, incoming) => {
+              console.log('ok');
+
+              return incoming;
+            },
+          },
+        },
+      },
       BookResult: {
         fields: {
           books: {
-            read: (value, { cache }) => {},
+            read: (value, { cache }) => {
+              console.log(value, 'book result read');
+              return value;
+            },
+            merge: (existing = [], incoming, { variables }) => {
+              console.log(incoming, 'book result merge');
+
+              return [...existing, ...incoming];
+            },
           },
         },
       },
@@ -79,21 +107,47 @@ const client = new ApolloClient({
         fields: {
           id: {
             merge: (existing: string, incoming: string, { cache }) => {
-              cache.writeFragment({
-                id: `BookResult:1`,
-                fragment: gql`
-                  fragment MyBook on Book {
-                    id
-                    category
+              const { books } = {
+                ...cache.readQuery({
+                  query: gql`
+                    query BookResult {
+                      books {
+                        id
+                        category
+                      }
+                    }
+                  `,
+                }),
+              };
+              cache.writeQuery({
+                query: gql`
+                  query BookResult {
+                    books {
+                      id
+                      category
+                    }
                   }
                 `,
                 data: {
-                  __typename: 'Book',
-                  id: incoming,
-                  category: 'none',
+                  books:
+                    books !== undefined
+                      ? [
+                          ...books,
+                          {
+                            __typename: 'Book',
+                            id: incoming,
+                            category: 'none',
+                          },
+                        ]
+                      : [
+                          {
+                            __typename: 'Book',
+                            id: incoming,
+                            category: 'none',
+                          },
+                        ],
                 },
               });
-              console.log('refetched');
               return incoming;
             },
           },
