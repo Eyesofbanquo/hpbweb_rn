@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.13",
+    "@eyesofbanquo/hpbtypes": "^1.0.7",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-firebase/app": "^11.1.2",
     "@react-native-firebase/remote-config": "^11.1.2",
